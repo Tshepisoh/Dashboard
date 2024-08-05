@@ -222,7 +222,7 @@ const Main = () => {
             <h3
               style={{
                 marginTop: 5,
-                marginLeft:250
+                marginLeft: 250,
               }}
             >
               Billy

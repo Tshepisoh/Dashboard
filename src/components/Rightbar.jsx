@@ -329,7 +329,6 @@ const Rightbar = () => {
             </ListItem>
             <Divider variant="inset" component="li" />
             <ListItem alignItems="flex-start">
-              
               <ListItemAvatar>
                 <Avatar
                   alt="F"
