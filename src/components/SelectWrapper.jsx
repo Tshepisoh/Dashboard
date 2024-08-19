@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Grid } from '@mui/material';
 
 
 
@@ -15,16 +16,13 @@ const SelectWrapper = () => {
     };
   return (
 
-    <Box sx={{ marginLeft:112,
-               marginTop: -7,
-               height:5
-
-     }}>
-    <FormControl sx={{
+   
+    <FormControl sx={{ml:130}}>
+      <InputLabel id="demo-simple-select-label" sx={{
         width:100,
         height:201,
-    }}>
-      <InputLabel id="demo-simple-select-label">All time</InputLabel>
+      
+    }}>All time</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
@@ -37,7 +35,8 @@ const SelectWrapper = () => {
         <MenuItem value={30}>Thirty</MenuItem>
       </Select>
     </FormControl>
-  </Box>
+
+   
         
 
   )
