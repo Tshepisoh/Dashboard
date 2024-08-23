@@ -8,7 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import { Chart } from "react-google-charts";
 
-
 import { List } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -21,7 +20,15 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import Box from "@mui/material/Box";
 
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import Rating from "@mui/material/Rating";
+import StarIcon from "@mui/icons-material/Star";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -31,6 +38,21 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
+
+const labels = {
+  0.5: "Useless+",
+  1: "Useless",
+  1.5: "Poor+",
+  2: "Poor",
+  2.5: "Ok",
+  3: "Ok+",
+  3.5: "Good",
+  4: "Good+",
+  4.5: "Excellent",
+  5: "Excellent+",
+};
+
+const value = 3.5;
 
 const products = [
   {
@@ -42,23 +64,23 @@ const products = [
   {
     imageSrc: "/15477911_5564330.jpg",
     altText: "UI KIT",
-    productName: "Product B",
+    productName: "Ninja",
     price: "$4100",
   },
   {
-    imageSrc: "/21743158_6479743.jpg",
+    imageSrc: "/poster-north-technology-with-man-wearing-green-helmet_719408-3391.avif",
     altText: "UI KIT",
-    productName: "Product C",
+    productName: "North",
     price: "$5000",
   },
   {
-    imageSrc: "/AA logo 02.jpg",
+    imageSrc: "/large-robot-with-gun-it-stands-front-large-building_719408-2423.jpg",
     altText: "UI KIT",
-    productName: "Product D",
+    productName: "Robots",
     price: "$2000",
   },
   {
-    imageSrc: "/Fox 3d and minimalist logo design.jpg",
+    imageSrc: "/gettyimages-1368564484-2048x2048.jpg",
     altText: "UI KIT",
     productName: "Product E",
     price: "$2000",
@@ -70,15 +92,15 @@ const products = [
     price: "$2150",
   },
   {
-    imageSrc: "/logo-1873902_1280.PNG",
+    imageSrc: "/poster-new-show-shows-man-with-gun-his-back_869640-264738.jpg",
     altText: "UI KIT",
-    productName: "Product G",
+    productName: "Black",
     price: "$3055",
   },
   {
-    imageSrc: "/apple-7741471_1280.PNG",
+    imageSrc: "/poster-movie-you-be-free-fire_1086760-50940.avif",
     altText: "UI KIT",
-    productName: "Product H",
+    productName: "Free Fire",
     price: "$2530",
   },
   {
@@ -96,6 +118,7 @@ const products = [
 ];
 
 
+
 const DemoPaper = styled(Paper)(({ theme }) => ({
   width: 443.9,
   height: 120,
@@ -104,45 +127,12 @@ const DemoPaper = styled(Paper)(({ theme }) => ({
   textAlign: "left",
 }));
 
-
-
 export const data = [
   ["Year", "Sales", "Expenses", "Profit"],
   ["2020", 10000, 4000, 4200],
   ["2021", 11170, 4650, 8250],
   ["2022", 6600, 1120, 3000],
   ["2023", 10030, 5400, 9350],
-];
-
-const items = [
-  {
-    name: "Remy",
-    avatar: {
-      alt: "Remy Sharp",
-      src: "/StockCake-Joyful Celebration Moment_1721899835.jpg"
-    }
-  },
-  {
-    name: "Travis",
-    avatar: {
-      alt: "Travis Howard",
-      src: "/StockCake-Serene Reading Moment_1721899943.jpg"
-    }
-  },
-  {
-    name: "Cindy",
-    avatar: {
-      alt: "Cindy Baker",
-      src: "StockCake-Mountain Meditation Moment_1721900256.jpg"
-    }
-  },
-  {
-    name: "Billy",
-    avatar: {
-      alt: "Billy",
-      src: "/StockCake-Cozy Reading Time_1721900389.jpg"
-    }
-  }
 ];
 
 
@@ -166,7 +156,6 @@ export const options = {
 // }));
 
 const Main = () => {
-
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -179,67 +168,45 @@ const Main = () => {
     setOpen(true);
   };
 
-  const handleClickOpen3 = (product) => {
-    setSelectedProduct(product);
-    navigate(`/productstats/${selectedProduct.id}`);
-    
-  };
+  const getProducts = useQuery({
+    queryKey: ['products'],
+    queryFn: () => axios.get("http://localhost:5000/products"),
+  });
 
-  const handleClose2 = () => {
-    setOpen(false);
-    setSelectedProduct(null);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleClickOpenCom = () => {
-    setOpenCom(true);
-  };
-
-  const handleCloseCom = () => {
-    setOpenCom(false);
-  };
+  const products1 = getProducts.data?.data?.data;
 
   return (
-    <Grid container>
-          <div>
-      <Stack direction="column" spacing={2}>
+    <Grid display="flex" container p={2} sx={{ justifyContent: "center" }}>
+      <Stack direction="column" spacing={2} sx={{ml:3}}>
         <DemoPaper
           variant="elevation"
           style={{
             borderRadius: 10,
             height: 550,
-            marginTop: 59,
+            marginTop: 50,
             fontSize: 18,
             fontWeight: 10,
+            marginTop: 5,
+              width: 560,
+              marginRight:2
           }}
         >
-          <Typography
-            style={{
-              fontWeight:'bold',
-              fontSize:25,
-            }}
-            mb={5}
-          >
-            Popular products
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            Popular Products
           </Typography>
-          <Typography style={{ display: "inline", color: "grey" }} sx={{fontSize:20}}>Products</Typography>
-          <Typography style={{ display: "inline", marginLeft: 240, color: "grey" }} sx={{fontSize:20}}>
-            Earnings
-          </Typography>
+          <Divider sx={{mt:1}} />
           <List
             sx={{
               width: "100%",
               maxWidth: 600,
               bgcolor: "background.paper",
-              maxHeight: 390,
+              maxHeight: 450,
               overflowY: "scroll",
               scrollbarWidth: "none",
+              mt: 2,
             }}
           >
-            {products?.map((product) => (
+            {products1?.map((product) => (
               <div>
                 <ListItem
                   alignItems="flex-start"
@@ -251,23 +218,23 @@ const Main = () => {
                       width: 1000,
                     },
                   }}
-                  onClick={() => handleClickOpen2(product)
-                  }
+                  onClick={() => handleClickOpen2(product)}
                   autoFocus
                 >
                   <ListItemAvatar>
                     <Avatar
                       alt="A"
-                      src={product.imageSrc}
+                      src={product.imgSrc}
                       sx={{
-                        height: 60,
-                        width: 60,
+                        height: 50,
+                        width: 50,
                         position: "absolute",
                         left: 5,
                         borderRadius: 3,
                       }}
                     />
                   </ListItemAvatar>
+
                   <ListItemText
                     primary={
                       <React.Fragment>
@@ -281,34 +248,89 @@ const Main = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          {product.productName}
+                          {product.name}
                         </Typography>
                       </React.Fragment>
                     }
                     secondary={
                       <React.Fragment>
+                        <Box
+                          sx={{
+                            display: "flex",
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              ml: 0,
+                              mt: 0,
+                            }}
+                          >
+                            <Rating
+                              name="text-feedback"
+                              value={product.rating}
+                              readOnly
+                              precision={0.5}
+                              emptyIcon={<StarIcon style={{ opacity: 0.55 }} />}
+                            />
+                         
+                          </Box>
+                          <Divider
+                            orientation="vertical"
+                            variant="middle"
+                            flexItem
+                            sx={{ height: 20, ml: 2, mt: -0 }}
+                          />
+
+                          <Typography
+                            sx={{
+                              display: "inline",
+                              marginLeft: 2,
+                              fontWeight: "bold",
+                            }}
+                          >
+                            ${product.price}
+                          </Typography>
+                        </Box>
+
+                        <Grid
+                          style={{
+                            marginLeft: 300,
+                            marginTop: -25,
+                            borderColor: "#0e7cf4",
+                            borderRadius: 200,
+                            background: "#bae8e8",
+                            height: 25,
+                            width: 25,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            border: "1px solid #0e7cf4",
+                          }}
+                          container
+                        >
+                          <ShoppingBagOutlinedIcon
+                            sx={{ color: "#0e7cf4", width: 15 }}
+                          ></ShoppingBagOutlinedIcon>
+                        </Grid>
                         <Typography
-                          sx={{ display: "inline" }}
+                          sx={{ ml: 42, position: "absolute", top: 45 }}
                           component="span"
                           variant="body2"
                           color="text.primary"
                         >
-                          {product.altText}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            display: "inline",
-                            marginLeft: 30,
-                            fontWeight: "bold",
-                          }}
-                        >
-                          {product.price}
+                          200k sold
                         </Typography>
                       </React.Fragment>
                     }
                   />
                 </ListItem>
-                <Divider variant="inset" component="li" />
+                <Divider
+                  variant="inset"
+                  component="li"
+                  sx={{ maxWidth: "100%" }}
+                />
               </div>
             ))}
           </List>
@@ -319,310 +341,48 @@ const Main = () => {
           style={{
             borderRadius: 10,
             height: 241,
+            width: 560,
           }}
+          elevation={3}
         >
           {" "}
-          <h2 style={{ fontSize: 20, fontWeight: 50 }}>Comments</h2>
-          
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: 600,
-              bgcolor: "background.paper",
-              maxHeight: 150,
-              overflowY: "scroll",
-              scrollbarWidth: "none",
+          <Typography variant="h7" sx={{ fontSize: 17, fontWeight: "bold" }}>
+            Customer & Expenses
+          </Typography>
+          <Divider sx={{ mt: 1, width: "100%" }}></Divider>
+          <Grid
+            display={"inline"}
+            style={{
+              marginLeft: 10,
+              marginTop: 50,
+              borderColor: "#0e7cf4",
+              borderRadius: 200,
+              background: "#bae8e8",
+              height: 70,
+              width: 70,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: "1px solid #0e7cf4",
             }}
-            onClick={handleClickOpenCom}
           >
-            <ListItem
-              alignItems="flex-start"
-              sx={{
-                ":hover": {
-                  backgroundColor: "#ececec",
-                  cursor: "pointer",
-                  borderRadius: 5,
-                },
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="/StockCake-Joyful Celebration Moment_1721899835.jpg"
-                  sx={{
-                    height: 60,
-                    width: 60,
-                    position: "absolute",
-                    left: 5,
-                    borderRadius: 20,
-                  }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Great Product"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      Remy
-                    </Typography>
-                    <Typography display={"inline"}>
-                      — I was very, very pleased with the service. My order
-                      details were updated regularly. I will definitely be
-                      ordering again. If I had to make a negative remark, I felt
-                      the local courier company could have better telephone
-                      communication. But that would be looking for something to
-                      complain about. So the ordering was excellent The updates
-                      were excellent The products themselves are very good
-                      quality. And the local courier was good. I’ll definitely
-                      order again. If this makes any difference, I order three
-                      items.. all Were items related to camera gear. And items
-                      were received in good condition and I’m very pleased with
-                      the quality.
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem
-              alignItems="flex-start"
-              sx={{
-                ":hover": {
-                  backgroundColor: "#ececec",
-                  cursor: "pointer",
-                  borderRadius: 5,
-                },
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar
-                  alt="Travis Howard"
-                  src="/StockCake-Serene Reading Moment_1721899943.jpg"
-                  sx={{
-                    height: 60,
-                    width: 60,
-                    position: "absolute",
-                    left: 5,
-                    borderRadius: 20,
-                  }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={"Awsome Service"}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      Travis
-                    </Typography>
-                    {" — Wish I could come, but I'm out of town this…"}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem
-              alignItems="flex-start"
-              sx={{
-                ":hover": {
-                  backgroundColor: "#ececec",
-                  cursor: "pointer",
-                  borderRadius: 5,
-                },
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar
-                  alt="Cindy Baker"
-                  src="StockCake-Mountain Meditation Moment_1721900256.jpg"
-                  sx={{
-                    height: 60,
-                    width: 60,
-                    position: "absolute",
-                    left: 5,
-                    borderRadius: 20,
-                  }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Great service"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      Cindy
-                    </Typography>
-                    {" — Do you have Paris recommendations? Have you ever…"}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem
-              alignItems="flex-start"
-              sx={{
-                ":hover": {
-                  backgroundColor: "#ececec",
-                  cursor: "pointer",
-                  borderRadius: 5,
-                },
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar
-                  alt="Billy"
-                  src="/StockCake-Cozy Reading Time_1721900389.jpg"
-                  sx={{
-                    height: 60,
-                    width: 60,
-                    position: "absolute",
-                    left: 5,
-                    borderRadius: 20,
-                  }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Amazing"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      Billy
-                    </Typography>
-                    {" — Do you have Paris recommendations? Have you ever…"}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>{" "}
-          </List>
+            <Inventory2OutlinedIcon
+              sx={{ color: "#0e7cf4" }}
+            ></Inventory2OutlinedIcon>
+          </Grid>
+          <Typography sx={{ mt: -8, ml: 13, color: "grey" }}>
+            Customer Growth
+          </Typography>
+          <Typography sx={{ mt: -3, ml: 35 }}>5500000</Typography>
+          <Typography sx={{ mt: -3, ml: 50, color: "green" }}>+50%</Typography>
+          <Divider sx={{ mt: 1, width: 360, ml: 12 }}></Divider>
+          <Typography sx={{ mt: 1, ml: 13, color: "grey" }}>
+            Expenses
+          </Typography>
+          <Typography sx={{ mt: -3, ml: 35 }}>5500000</Typography>
+          <Typography sx={{ mt: -3, ml: 50, color: "red" }}>-50%</Typography>
         </DemoPaper>
-
-        <React.Fragment>
-          <Dialog
-            fullScreen={fullScreen}
-            open={open}
-            onClose={handleClose2}
-            aria-labelledby="responsive-dialog-title"
-            key={selectedProduct?.id} 
-          >
-            <DialogTitle id="responsive-dialog-title">
-              <Avatar
-                src={selectedProduct?.imageSrc}
-                alt='ui kit'
-                style={{
-                  height: 200,
-                  width: 200,
-                  margin: 50,
-                  borderRadius: 10,
-                }}
-                
-              >
-              </Avatar>
-            </DialogTitle>
-            <DialogContent>
-              <Typography
-                variant="h6"
-                sx={{ display: "inline", ml: 3 }}
-              >
-                {selectedProduct?.productName} 
-              </Typography>
-              <Typography
-                sx={{
-                  display: "inline",
-                  ml: 15,
-                  mt: -3,
-                  fontWeight: "bold",
-                }}
-              >{selectedProduct?.price}</Typography>
-              <Typography variant="subtitle1" sx={{ ml: 3, mt: 0 }}>
-              {selectedProduct?.altText}
-              </Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleClose2}>
-                Close
-              </Button>
-              <Button  onClick={() => handleClickOpen3(selectedProduct)}  autoFocus>
-                View Stats
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </React.Fragment>
-
-        <React.Fragment>
-          <BootstrapDialog
-            onClose={handleClose}
-            aria-labelledby="customized-dialog-title"
-            open={openCom}
-          >
-            <ListItemAvatar>
-              <Avatar
-                alt="Remy Sharp"
-                src="/StockCake-Joyful Celebration Moment_1721899835.jpg"
-                sx={{
-                  height: 50,
-                  width: 50,
-                  borderRadius: 20,
-                  m: 2,
-                }}
-              />
-            </ListItemAvatar>
-            <Typography
-              sx={{
-                position: "absolute",
-                right: 475,
-                top: 26,
-              }}
-              variant="h6"
-            >
-              Remy
-            </Typography>
-            <DialogContent dividers>
-              <Typography display={"inline"}>
-                I was very, very pleased with the service. My order details were
-                updated regularly. I will definitely be ordering again. If I had
-                to make a negative remark, I felt the local courier company
-                could have better telephone communication. But that would be
-                looking for something to complain about. So the ordering was
-                excellent The updates were excellent The products themselves are
-                very good quality. And the local courier was good. I’ll
-                definitely order again. If this makes any difference, I order
-                three items.. all Were items related to camera gear. And items
-                were received in good condition and I’m very pleased with the
-                quality.
-              </Typography>
-            </DialogContent>
-            <DialogActions>
-              <Button autoFocus onClick={handleCloseCom}>
-                close
-              </Button>
-              <Button autoFocus onClick={handleCloseCom}>
-                View Profile
-              </Button>
-            </DialogActions>
-          </BootstrapDialog>
-        </React.Fragment>
       </Stack>
-      
-    </div>
-    
     </Grid>
   );
 };

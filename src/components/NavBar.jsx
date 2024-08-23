@@ -1,5 +1,5 @@
 import React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled, useTheme,alpha  } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -16,11 +16,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import Main from "./Main";
-import Rightbar from "./Rightbar";
-import { Grid } from "@mui/material";
+import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
+import { Avatar, Grid } from "@mui/material";
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
+import { useNavigate } from "react-router-dom";
+
+
 
 const drawerWidth = 240;
 
@@ -59,8 +66,8 @@ const AppBar = styled(MuiAppBar, {
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+
+    
   }),
   ...(open && {
     marginLeft: drawerWidth,
@@ -89,49 +96,52 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-// const Search = styled('div')(({ theme }) => ({
-//     position: 'relative',
-//     borderRadius: theme.shape.borderRadius,
-//     backgroundColor: alpha(theme.palette.common.white, 0.15),
-//     borderColor:'black',
-//     '&:hover': {
-//       backgroundColor: alpha(theme.palette.common.white, 0.25),
-//     },
-//     marginRight: theme.spacing(8),
-//     marginLeft: 50,
-//     width: 100,
-//     [theme.breakpoints.up('sm')]: {
-//       marginLeft: theme.spacing(22),
-//       width: 510,
-//     },
-//   }));
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.black, 0.1),
+    borderColor:'black',
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.black, 0.25),
+    },
+    marginRight: theme.spacing(8),
+    marginLeft: 55,
+    width: 90,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(0),
+      marginTop: theme.spacing(-1),
+      width: 450,
+    },
+  }));
 
-//   const SearchIconWrapper = styled('div')(({ theme }) => ({
-//     padding: theme.spacing(0, 2),
-//     height: '100%',
-//     position: 'absolute',
-//     pointerEvents: 'none',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     color:'grey'
-//   }));
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color:'grey'
+  }));
 
-//   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//     color: 'black',
-//     '& .MuiInputBase-input': {
-//       padding: theme.spacing(1, 1, 1, 0),
-//       // vertical padding + font size from searchIcon
-//       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//       transition: theme.transitions.create('width'),
-//       width: '100%',
-//       [theme.breakpoints.up('md')]: {
-//         width: '20ch',
-//       },
-//     },
-//   }));
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'black',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
+  }));
 
 const NavBar = () => {
+
+  const navigate = useNavigate();
   // const [anchorEl, setAnchorEl] = React.useState(null);
   // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -252,12 +262,17 @@ const NavBar = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+ <Box>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <AppBar position='fixed' open={open} sx={{background:'#fbfcf8', height:60}}>
+
+        <Grid sx={{...(open && { display: "none" }), mt:0,ml:0,height:60, width:65}}>
+        <img style={{ height:40, marginLeft:6, marginTop:6}} src="Logo5.svg"></img>
+        </Grid>
+     
+        <Toolbar sx={{ml:7, position:'absolute', top:0}} >
           <IconButton
-            color="inherit"
+            color="black"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -268,31 +283,49 @@ const NavBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
+
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+
+          <Box  sx={{ml:220,position:'fixed', zIndex: 1200}} >
+            <Avatar src="StockCake-Serene Reading Moment_1721899943.jpg"/>
+          </Box>
+  
         </Toolbar>
+       
       </AppBar>
+
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+        <DrawerHeader >
+        <img style={{ position:'absolute', left:8, width:170}} src="Mylogo4.svg"></img>
+
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
               <ChevronLeftIcon />
             )}
+             
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+   
+        <List sx={{mt:-1}}>
+          
+            <ListItem disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                onClick={()=>navigate('/')}
               >
                 <ListItemIcon
                   sx={{
@@ -301,17 +334,17 @@ const NavBar = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  <SpaceDashboardOutlinedIcon/>
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={'Dashboard'} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          ))}
+
         </List>
-        <Divider />
+ 
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
+      
+            <ListItem  disablePadding sx={{ display: "block" }}  onClick={()=>navigate('/inventory')}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -326,59 +359,79 @@ const NavBar = () => {
                     justifyContent: "center",
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <Inventory2OutlinedIcon/>
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={'Inventory'}  sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-          ))}
+
+            <ListItem  disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                onClick={()=>navigate('/products')}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                <LocalMallOutlinedIcon/>
+                </ListItemIcon>
+                <ListItemText primary={'Products'}  sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem  disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+                onClick={()=>navigate('/customers')}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+              <PersonOutlinedIcon/>
+                </ListItemIcon>
+                <ListItemText primary={'users'}  sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem  disablePadding sx={{ display: "block" }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                <TuneOutlinedIcon/>
+                </ListItemIcon>
+                <ListItemText primary={'Settings'}  sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-
-        <Grid
-          container
-          sx={{ height: "calc(100vh - 100vh)", flexDirection: "row", width:'100%' }}
-        >
-          <Grid
-            item
-            xs={15}
-            sm={4}
-            sx={{
-              background: "cyan",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Main />
-          </Grid>
-          <Grid
-            item
-            xs={15}
-            sm={4}
-            sx={{
-              background: "pink",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Main />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={4}
-            sx={{
-              background: "#ececec",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Rightbar />
-          </Grid>
-        </Grid>
-      </Box>
     </Box>
   );
 };

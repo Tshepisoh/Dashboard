@@ -1,7 +1,7 @@
 import React from 'react';
 import IncomeMain from '../components/IncomeMain';
 import NavBar from "../components/NavBar";
-import LeftBar from "../components/LeftBar";
+import LeftBar from "../components/SalesSummary";
 import { Grid } from "@mui/material";
 
 const Income = () => {

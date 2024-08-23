@@ -1,6 +1,6 @@
 import React from 'react'
 import NavBar from "../components/NavBar";
-import LeftBar from "../components/LeftBar";
+import LeftBar from "../components/SalesSummary";
 import { Grid } from "@mui/material";
 import ProductsStats from '../components/ProductsStats'
 

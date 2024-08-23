@@ -4,6 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SecurityIcon from '@mui/icons-material/Security';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { randomCreatedDate, randomUpdatedDate } from '@mui/x-data-grid-generator';
+import { Grid, Typography } from '@mui/material';
 
 const initialRows = [
   {
@@ -70,6 +71,7 @@ const initialRows = [
 ];
 
 const CustomerMain = () => {
+
   const [rows, setRows] = React.useState(initialRows);
 
   const deleteUser = React.useCallback(
@@ -170,9 +172,10 @@ const CustomerMain = () => {
   );
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
-      <DataGrid columns={columns} rows={rows} />
-    </div>
+    <Grid style={{ height:600, width:1880 }}>
+      <Typography variant='h5' sx={{mt:10,ml:11}}>Users</Typography>
+      <DataGrid columns={columns} rows={rows} sx={{display:'flex', ml:11, mt:1, background:'white'}} />
+    </Grid>
   );
 }
 
