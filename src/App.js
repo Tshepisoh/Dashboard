@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-    <div>
+   
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Home/>}></Route>
@@ -23,7 +23,7 @@ function App() {
           <Route path="*" element={'Page not found'}></Route>
         </Routes>
       </BrowserRouter>
-    </div>
+
     </QueryClientProvider>
   );
 }

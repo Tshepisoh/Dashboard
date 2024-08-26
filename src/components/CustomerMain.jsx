@@ -172,9 +172,9 @@ const CustomerMain = () => {
   );
 
   return (
-    <Grid style={{ height:600, width:1880 }}>
-      <Typography variant='h5' sx={{mt:10,ml:11}}>Users</Typography>
-      <DataGrid columns={columns} rows={rows} sx={{display:'flex', ml:11, mt:1, background:'white'}} />
+    <Grid>
+      <Typography variant='h5' sx={{mt:8,ml:11}}>Users</Typography>
+      <DataGrid columns={columns} rows={rows} sx={{display:'flex', ml:11, mt:1, background:'white', width:1800, height:500}} />
     </Grid>
   );
 }

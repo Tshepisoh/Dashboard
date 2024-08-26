@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
@@ -54,7 +54,7 @@ const InventoryMain = () => {
   const products1 = getProducts.data?.data?.data;
   return (
     
-    <Box sx={{ height: 400, width: 1800, mt:10, ml:11 }}>
+    <Box sx={{ height: 630, width: 1800, mt:10, ml:11 }}>
       <Typography variant='h6'>Inventory</Typography>
       <DataGrid
         sx={{mt:1, background:'white'}}
@@ -63,7 +63,7 @@ const InventoryMain = () => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 10,
             },
           },
         }}

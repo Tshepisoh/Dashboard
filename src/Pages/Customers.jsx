@@ -8,7 +8,7 @@ const Customers = () => {
   return (
     <div>
     <NavBar />
-    <Grid container>
+    <Grid >
       <Grid item sm={12} sx={{ background: "#ececec", height: "100vh" }}>
        <CustomerMain/>
       </Grid>

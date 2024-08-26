@@ -25,7 +25,7 @@ export const options = {
   is3D: true,
 };
 
-const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+const uData = [4000, 5000, 2000, 2780, 1890, 2390, 3490,5000,3000,8000];
 const xLabels = [
   "Page A",
   "Page B",
@@ -33,6 +33,9 @@ const xLabels = [
   "Page D",
   "Page E",
   "Page F",
+  "Page G",
+  "Page G",
+  "Page G",
   "Page G",
 ];
 

@@ -170,7 +170,7 @@ const Main = () => {
 
   const getProducts = useQuery({
     queryKey: ['products'],
-    queryFn: () => axios.get("http://localhost:5000/products"),
+    queryFn: () => axios.get("http://localhost:5000/popularproducts"),
   });
 
   const products1 = getProducts.data?.data?.data;
@@ -320,7 +320,7 @@ const Main = () => {
                           variant="body2"
                           color="text.primary"
                         >
-                          200k sold
+                          {Math.round(product.quantity/5)}k sold
                         </Typography>
                       </React.Fragment>
                     }
