@@ -6,8 +6,7 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -17,7 +16,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import Main from "./Main";
+
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import { Avatar, Grid } from "@mui/material";
 import InputBase from '@mui/material/InputBase';
@@ -267,7 +266,7 @@ const NavBar = () => {
       <AppBar position='fixed' open={open} sx={{background:'#fbfcf8', height:60}}>
 
         <Grid sx={{...(open && { display: "none" }), mt:0,ml:0,height:60, width:65}}>
-        <img style={{ height:40, marginLeft:6, marginTop:6}} src="Logo5.svg"></img>
+        <img style={{ height:40, marginLeft:6, marginTop:6}} src="Logo5.svg" alt="img"></img>
         </Grid>
      
         <Toolbar sx={{ml:7, position:'absolute', top:0}} >
@@ -304,7 +303,7 @@ const NavBar = () => {
 
       <Drawer variant="permanent" open={open}>
         <DrawerHeader >
-        <img style={{ position:'absolute', left:8, width:170}} src="Mylogo4.svg"></img>
+        <img style={{ position:'absolute', left:8, width:170}} src="Mylogo4.svg" alt="img"></img>
 
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -437,20 +436,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-{
-  /* <img src='Logo.svg' alt='grid' style={{height:60,}}></img> */
-}
-
-{
-  /* <Search  >
-              <SearchIconWrapper >
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-               
-              />
-            </Search> */
-}
